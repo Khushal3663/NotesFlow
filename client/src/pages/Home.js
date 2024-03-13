@@ -1,11 +1,11 @@
-import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router,  Route, Routes } from "react-router-dom";
 import "../App.css";
 import Header from "../components/Header";
 import NotesListPage from "./NotesListPage";
 import NotePage from "./NotePage";
 import Login from "./Login";
-import { useContext, useEffect, useState } from "react";
-import App, { AuthContext } from "../App";
+import { useContext} from "react";
+import { AuthContext } from "../App";
 import NotFound from "./NotFound";
 
 
@@ -15,7 +15,6 @@ function Home() {
    
   const {cookie} =  useContext(AuthContext);
   return (
-    // <Router>
       <div className="container dark">
         <div className="app">
         {cookie.token ? <Header />:"" }
@@ -28,7 +27,6 @@ function Home() {
         </Routes>
         </div>
       </div>
-    //   </Router>
   );
 }
 

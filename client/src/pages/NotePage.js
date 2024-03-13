@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import notes from '../assets/data'
 import {ReactComponent as ArrowLeft} from '../assets/arrow-left.svg'
 import { AuthContext } from '../App';
 import { BASE_URL } from '../baseUrl.js';
+import generateToast from '../App.js'
 
 
 const NotePage = () => {
-  const {cookie} = useContext(AuthContext);
+  const {cookie, generateToast} = useContext(AuthContext);
   const [note, setNote] = useState({
     title:"Title", body:"Note"
   })
@@ -20,45 +20,61 @@ const NotePage = () => {
   },[])
 
   const getNote = async ()=>{
-    console.log(id);
-    if(id == "new") return
-    const response = await fetch(`${BASE_URL}/api/v1/notes/${id}`,{
-      method:'GET',
-      headers:{
-        'Authorization': `Bearer ${cookie.token}`
-      }});
-    const data = await response.json();
     
-    setNote(data);
+    if(id == "new") return;
+    try {
+      const response = await fetch(`${BASE_URL}/api/v1/notes/${id}`,{
+        method:'GET',
+        headers:{
+          'Authorization': `Bearer ${cookie.token}`
+        }});
+      const data = await response.json();
+      setNote(data);
+    } catch (error) {
+      generateToast("Some Error occured",'error')
+    }
+    
+    
+    
   }
 
 
 
 
   const updateNote = async ()=>{
-    const response = await fetch(`${BASE_URL}/api/v1/notes/${note._id}`, {
-      method : "PUT",
-      headers:{
-        'Authorization': `Bearer ${cookie.token}`,
-        'Content-Type':"application/json"
-      },
-      body: JSON.stringify({...note})
-    })
-    const data = await response.json()
+    
+
+    try {
+      const response = await fetch(`${BASE_URL}/api/v1/notes/${note._id}`, {
+        method : "PUT",
+        headers:{
+          'Authorization': `Bearer ${cookie.token}`,
+          'Content-Type':"application/json"
+        },
+        body: JSON.stringify({...note})
+      })
+      const data = await response.json()
+    } catch (error) {
+      generateToast("Some Error occured",'error')
+    }
     
   }
   
  
 
 let createNote = async()=>{
-  await fetch(`${BASE_URL}/api/v1/notes/`, {
-    method:'POST',
-    headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${cookie.token}`
-    },
-    body: JSON.stringify(note)
-  });
+  try {
+    await fetch(`${BASE_URL}/api/v1/notes/`, {
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookie.token}`
+      },
+      body: JSON.stringify(note)
+    });
+  } catch (error) {
+    generateToast("Some Error occured",'error')
+  }
 }
 
 
@@ -77,14 +93,19 @@ let handleSubmit= ()=>{
 }
 
 const deleteNote = async ()=>{
-  await fetch(`${BASE_URL}/api/v1/notes/${id}`,{
-    method:'DELETE',
-    headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${cookie.token}`
-    },
-    body: JSON.stringify(note)
-  })
+  
+  try {
+    await fetch(`${BASE_URL}/api/v1/notes/${id}`,{
+      method:'DELETE',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookie.token}`
+      },
+      body: JSON.stringify(note)
+    })
+  } catch (error) {
+    generateToast("Some Error occured",'error')
+  }
   navigate('/');
 }
 

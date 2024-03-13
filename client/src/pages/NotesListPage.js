@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import notes from '../assets/data'
 import ListItem from '../components/ListItem'
 import AddButton from '../components/AddButton'
 
@@ -62,4 +61,4 @@ const NotesListPage = () => {
   )
 }
 
-export default NotesListPage
+export default NotesListPage;

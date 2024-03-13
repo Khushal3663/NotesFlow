@@ -24,7 +24,7 @@ const mydb = async () => {
 
     console.log("connected to Mongodb Atlas");
 } catch (error) {
-      console.log("Failed to connrct"+ error.message);
+      console.log("Failed to connect"+ error.message);
 
   }
 };

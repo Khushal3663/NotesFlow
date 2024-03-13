@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
 import Home from './pages/Home'
-import Login from './pages/Login';
 import { useCookies } from 'react-cookie';
 import {BrowserRouter as Router } from 'react-router-dom';
 import {Bounce, ToastContainer, toast} from 'react-toastify';
@@ -9,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 export const AuthContext = createContext();
 
 const App = () => {
-  const [token, setToken] = useState(false);
   const [cookie, setCookie,removeCookie] = useCookies(['token'])
   
   const generateToast =(message, type)=>{

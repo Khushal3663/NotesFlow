@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import { AuthContext } from "../App";
 import { BASE_URL } from "../baseUrl.js";
 
@@ -57,7 +57,7 @@ const Login = () => {
         
         
       } catch (error) {
-        console.log(error);
+        generateToast(error.message,'error');
       }
   }
 
@@ -86,14 +86,16 @@ const Login = () => {
             generateToast(data.message,"error");
         }else{
             generateToast(data.message,"success");
+            login()
             setWantToLogin(true);
         }
-        console.log(data);
+        
         
       } catch (error) {
         generateToast("Error ouccured!",'error');
         console.log(error.message);
       }
+      
   }
 
   return (
